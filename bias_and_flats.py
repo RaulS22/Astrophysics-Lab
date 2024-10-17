@@ -34,7 +34,7 @@ bias_files = ["bias_cooled_2024-09-23_18-43-30_0220.fits", "bias_cooled_2024-09-
               "bias_cooled_2024-09-23_18-44-14_0238.fits", "bias_cooled_2024-09-23_18-44-17_0239.fits"]
 
 # Load the Bias Images
-bias_path = "23092024/BIAS/"
+bias_path = "BIAS/"
 bias_images = []
 for file in bias_files:
     image = fits.getdata(bias_path + file)
@@ -44,7 +44,7 @@ for file in bias_files:
 master_bias = np.median(np.asarray(bias_images), axis=0)
 
 # Create the Master Bias
-savename= "23092024/M57/"+"master_bias.fits"
+savename= "M57/"+"master_bias.fits"
 fits.writeto(savename, master_bias, overwrite=True)
 
 
@@ -59,7 +59,7 @@ Master Flat Black
 
 
 # Create master flat
-flat_dir = "23092024/FLAT/" # Folder with all the flats
+flat_dir = "FLAT/" # Folder with all the flats
 flat_files = ["flat__2024-09-23_18-52-28_black_0241.fits"]
 
 # Load the Flat Images
@@ -77,7 +77,7 @@ master_flat_black = np.median(cflats,axis=0)
 
 # Save the Master Flat as a fits file
 
-fits.writeto("23092024/M57/"+"master_flat_black.fits", master_flat_black, overwrite=True)
+fits.writeto("M57/"+"master_flat_black.fits", master_flat_black, overwrite=True)
 
 
 
@@ -96,7 +96,7 @@ Master Flat Blue
 
 
 # Create master flat (Blue)
-flat_dir = "23092024/FLAT/" # Folder with all the flats
+flat_dir = "FLAT/" # Folder with all the flats
 flat_files = ["flat__2024-09-23_18-53-07_Blue_0242.fits", "flat__2024-09-23_18-53-47_Blue_0243.fits",
               "flat__2024-09-23_18-54-21_Blue_0244.fits", "flat__2024-09-23_18-54-43_Blue_0245.fits",
               "flat__2024-09-23_18-55-06_Blue_0246.fits", "flat__2024-09-23_18-55-29_Blue_0247.fits"]
@@ -116,7 +116,7 @@ master_flat_blue = np.median(cflats,axis=0)
 
 # Save the Master Flat as a fits file
 
-fits.writeto("23092024/M57/"+"master_flat_blue.fits", master_flat_blue, overwrite=True)
+fits.writeto("M57/"+"master_flat_blue.fits", master_flat_blue, overwrite=True)
 
 
 
@@ -133,7 +133,7 @@ Master Flat Green
 
 
 # Create master flat (Green)
-flat_dir = "23092024/FLAT/" # Folder with all the flats
+flat_dir = "FLAT/" # Folder with all the flats
 flat_files = ["flat__2024-09-23_18-56-09_Green_0248.fits", "flat__2024-09-23_18-56-31_Green_0249.fits",
               "flat__2024-09-23_18-56-54_Green_0250.fits", "flat__2024-09-23_18-57-17_Green_0251.fits",
               "flat__2024-09-23_18-57-39_Green_0252.fits"]
@@ -153,7 +153,7 @@ master_flat_green = np.median(cflats,axis=0)
 
 # Save the Master Flat as a fits file
 
-fits.writeto("23092024/M57/"+"master_flat_green.fits", master_flat_green, overwrite=True)
+fits.writeto("M57/"+"master_flat_green.fits", master_flat_green, overwrite=True)
 
 
 
@@ -168,7 +168,7 @@ Master Flat Red
 
 
 # Create master flat (Red)
-flat_dir = "23092024/FLAT/" # Folder with all the flats
+flat_dir = "FLAT/" # Folder with all the flats
 flat_files = ["flat__2024-09-23_18-58-24_Red_0253.fits", "flat__2024-09-23_18-58-57_Red_0254.fits",
               "flat__2024-09-23_18-59-30_Red_0255.fits", "flat__2024-09-23_19-00-02_Red_0256.fits",
               "flat__2024-09-23_19-00-35_Red_0257.fits"]
@@ -188,7 +188,7 @@ master_flat_red = np.median(cflats,axis=0)
 
 # Save the Master Flat as a fits file
 
-fits.writeto("23092024/M57/"+"master_flat_red.fits", master_flat_red, overwrite=True)
+fits.writeto("M57/"+"master_flat_red.fits", master_flat_red, overwrite=True)
 
 
 
