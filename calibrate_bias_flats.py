@@ -18,17 +18,17 @@ Tomás Quinhones 100371
 """
 
 # Load the Master Bias
-bias_path = "23092024/BIAS/"
+bias_path = "BIAS/"
 master_bias = fits.getdata(bias_path + "master_bias.fits")
 
 # Load the Master Flat
-flat_path = "23092024/FLAT/"
+flat_path = "FLAT/"
 master_flat_black = fits.getdata(flat_path + "master_flat_black.fits")
 master_flat_red = fits.getdata(flat_path + "master_flat_red.fits")
 master_flat_green = fits.getdata(flat_path + "master_flat_green.fits")
 master_flat_blue = fits.getdata(flat_path + "master_flat_blue.fits")
 
-dir = "23092024/M57/" #Path 
+dir = "M57/" #Path 
 
 
 
@@ -125,6 +125,7 @@ raw_files = {
         'm57_2024-09-23_20-41-10_Red_0389.fits']
 }
 
+
 # Process each color
 calibrated_results = {}
 for color, files in raw_files.items():
@@ -150,6 +151,9 @@ for color, files in raw_files.items():
     calibrated_images, masks = calibrate_images(dir, files)
     if calibrated_images:  # Check if there are calibrated images to save
         save_calibrated_images(calibrated_images, color, output_dir)
+
+
+#Warning: The file 'red_M57_002.fits' has an error, so it need to be removed
 
 
 # Tests
