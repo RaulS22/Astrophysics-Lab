@@ -104,7 +104,7 @@ if __name__ == '__main__':
             'green_M57_013.fits', 'green_M57_014.fits', 'green_M57_015.fits',
             'green_M57_016.fits', 'green_M57_017.fits', 'green_M57_018.fits',
             'green_M57_019.fits', 'green_M57_020.fits', 'green_M57_021.fits',
-            'green_M57_022.fits', 'green_M57_023.fits', 'green_M57_024.fits'
+            'green_M57_022.fits', 'green_M57_023.fits', 
         ],
         'blue': [
             'blue_M57_001.fits', 'blue_M57_002.fits', 'blue_M57_003.fits',
@@ -117,12 +117,14 @@ if __name__ == '__main__':
         ]
     }
     
+#warning: The file 'green_m57_022.fits' has an error, so it has to be removed
+
     # Define positions for each filter
     positions = {
         'black': [[90, 453]] * 12,
         'red': [[165, 263]] * 8 + [[150, 260]] * 1,
-        'green': [[140, 353]] * 12 + [[140, 320]] * 12,
-        'blue': [[101, 431]] * 11 + [[112, 407]] * 10
+        'green': [[140, 353]] * 12 + [[140, 320]] * 8 + [[141, 318]] * 1 + [[140, 320]]*2,
+        'blue': [[101, 431]] * 2 + [[99, 442]] * 2 + [[101, 431]] * 7 + [[112, 407]] * 10
     }
     
     # Create the Centroid object

@@ -109,7 +109,6 @@ raw_files = {
         'm57_2024-09-23_20-24-22_Green_0374.fits',
         'm57_2024-09-23_20-24-54_Green_0375.fits',
         'm57_2024-09-23_20-25-27_Green_0376.fits',
-        'm57_2024-09-23_20-33-26_Green_0377.fits',
         'm57_2024-09-23_20-34-08_Green_0378.fits',
         'm57_2024-09-23_20-34-54_Green_0379.fits'],
 
@@ -154,8 +153,10 @@ for color, files in raw_files.items():
         save_calibrated_images(calibrated_images, color, output_dir)
 
 
-# Warning: The file 'm57_2024-09-23_20-37-21_Red_0382.fits' has an error, so it was removed
-# Warning: The old file 'red_M57_002.fits' has an error, was removed 
+# Warning: The file 'm57_2024-09-23_20-37-21_Red_0382.fits' has an error so it was removed
+# Warning: The old file 'red_M57_002.fits' has an error so it was removed 
+# Warning: The file 'm57_2024-09-23_20-33-26_Green_0377.fits' has an error so it was removed
+# Warning: The old file 'green_M57_022.fits' has an error so it was removed
 
 # Tests
 
