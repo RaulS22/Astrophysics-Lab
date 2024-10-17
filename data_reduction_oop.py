@@ -2,7 +2,6 @@ import numpy as np
 import scipy
 import matplotlib.pyplot as plt
 from astropy.io import fits
-from photutils.centroids import centroid_com, centroid_2dg
 
 """
 Grupo 3
@@ -21,11 +20,11 @@ Tomás Quinhones 100371
 
 
 # Load the Master Bias
-bias_path = "23092024/BIAS/"
+bias_path = "M57/"
 master_bias = fits.getdata(bias_path + "master_bias.fits")
 
 # Load the Master Flat
-flat_path = "23092024/FLAT/"
+flat_path = "M57/"
 master_flat_black = fits.getdata(flat_path + "master_flat_black.fits")
 master_flat_red = fits.getdata(flat_path + "master_flat_red.fits")
 master_flat_green = fits.getdata(flat_path + "master_flat_green.fits")
@@ -96,94 +95,7 @@ class Denoise():
         mask=mask.astype(bool)
 
         return science_calibrated, mask
-    
-
-
-
-
-
-
-
-
-# Now, we'll create the class to deal with the shifting of the images
-# We'll calculate the centroid and make use of it to shift the images accordingly
-
-class Centroid():
-
-    def __init__(self, dir, file1, file2, pos1, pos2):
-        '''
-        This class will be used to shift the images
-        
-        Parameters:
-        dir: str
-            The path to the files
-        
-        file1: str
-            The first file name
-
-        file2: str
-            The second file name
-
-        pos1: ndarray
-            The rough position of the centroid of the 1st image
-
-        pos2: ndaray
-            The rough position of the centroid of the 2nd image
-        '''
-
-        self.dir = dir
-        self.file1 = file1
-        self.file2 = file2
-        self.pos1 = pos1
-        self.pos2 = pos2
-
-        # Testing
-        if isinstance(dir, str) == False:
-            raise ValueError("Path must be a string")
-        
-        if isinstance(file1, str) == False:
-            raise ValueError("File1 must be a string")
-        
-        if isinstance(file2, str) == False:
-            raise ValueError("File2 must be a string")
-        
-    def get_centroids(self, plot=False):
-            '''
-            Get a subdata of 60x60 pixels around the centroid images
-
-            Parameters:
-            plot: bool
-                If True, it will plot the subdata of the images
-            '''
-            data1 = fits.getdata(self.dir + self.file1)
-            data2 = fits.getdata(self.dir + self.file2)
-            pos1 = np.array(self.pos1)
-            pos2 = np.array(self.pos2)
-
-            subdata1 = data1[pos1[1]-30:pos1[1]+30, pos1[0]-30:pos1[0]+30]
-            subdata2 = data2[pos2[1]-30:pos2[1]+30, pos2[0]-30:pos2[0]+30]
-
-            center1,center2 = centroid_2dg(subdata1)+pos1-[30,30],centroid_2dg(subdata2)+pos2-[30,30]
-            c_center1,c_center2 = centroid_com(subdata1)+pos1-[30,30],centroid_com(subdata2)+pos2-[30,30]
-
-            if plot == True:
             
-                plt.imshow(subdata1)
-                plt.plot(centroid_2dg(subdata1)[0], centroid_2dg(subdata1)[1], 'r+', markersize=10, label='Centroid')
-                plt.plot(centroid_com(subdata1)[0], centroid_com(subdata1)[1], 'w+', markersize=10, label='Centroid COM')
-                plt.title('Subdata 1')
-                plt.colorbar()
-                plt.show()
-
-                plt.imshow(subdata2)
-                plt.plot(centroid_2dg(subdata2)[0], centroid_2dg(subdata2)[1], 'r+', markersize=10, label='Centroid')
-                plt.plot(centroid_com(subdata2)[0], centroid_com(subdata2)[1], 'w+', markersize=10, label='Centroid COM')
-                plt.title('Subdata 2')
-                plt.colorbar()
-                plt.show()
-
-            return center1,center2,c_center1,c_center2
-        
             
 
         
@@ -195,14 +107,14 @@ class Centroid():
 
 
 
- 
+""" 
     
 # Testing the Denoise class
 if __name__ == "__main__":
     file1 = 'm57_2024-09-23_19-29-46_black_0323.fits'
     file2 = 'm57_2024-09-23_19-32-23_black_0324.fits'
     file3 = 'm57_2024-09-23_19-32-56_black_0325.fits'
-    path = '23092024/M57/'
+    path = 'M57/'
 
     denoised_1 = Denoise(path, file1)
     science_1, mask_1 = denoised_1.Calibrate()
@@ -232,31 +144,10 @@ if __name__ == "__main__":
     science_3, mask_3 = denoised_3.Calibrate()
     lo, up = np.percentile(science_3, (5, 95))
 
-    path = '23092024/'
+    path = ''
     fits.writeto(path + 'calibrated_' + file1, science_1, overwrite=True)
     fits.writeto(path + 'calibrated_' + file2, science_2, overwrite=True)
     fits.writeto(path + 'calibrated_' + file3, science_3, overwrite=True)
 
+"""
 
-
-# Testing the Centroid class
-if __name__ == "__main__":
-    file1 = 'calibrated_m57_2024-09-23_19-29-46_black_0323.fits'
-    file2 = 'calibrated_m57_2024-09-23_19-32-23_black_0324.fits'
-    file3 = 'calibrated_m57_2024-09-23_19-32-56_black_0325.fits'
-
-    dir = '23092024/'
-
-    pos1 = [610, 739]
-    pos2 = [611, 726]
-    pos3 = [612, 718]
-
-    centroid = Centroid(dir, file1, file2, pos1, pos2)
-    center1, center2, c_center1, c_center2 = centroid.get_centroids(plot=True)
-    print(center1, center2, c_center1, c_center2)
-
-    centroid = Centroid(dir, file1, file3, pos1, pos3)
-    center1, center3, c_center1, c_center3 = centroid.get_centroids(plot=True)
-    print(center1, center3, c_center1, c_center3)
-
-    
