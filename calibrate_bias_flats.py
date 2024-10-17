@@ -104,7 +104,6 @@ raw_files = {
         'm57_2024-09-23_20-21-38_Green_0369.fits',
         'm57_2024-09-23_20-22-11_Green_0370.fits',
         'm57_2024-09-23_20-22-44_Green_0371.fits',
-        'm57_2024-09-23_20-23-16_Green_0372.fits',
         'm57_2024-09-23_20-23-49_Green_0373.fits',
         'm57_2024-09-23_20-24-22_Green_0374.fits',
         'm57_2024-09-23_20-24-54_Green_0375.fits',
@@ -155,6 +154,8 @@ for color, files in raw_files.items():
 
 # Warning: The file 'm57_2024-09-23_20-37-21_Red_0382.fits' has an error so it was removed
 # Warning: The old file 'red_M57_002.fits' has an error so it was removed 
+# Warning: The file 'm57_2024-09-23_20-23-16_Green_0372.fits' has an error so it was removed
+# Warning: The old file 'green_M57_019.fits' has an error so it was removed
 # Warning: The file 'm57_2024-09-23_20-33-26_Green_0377.fits' has an error so it was removed
 # Warning: The old file 'green_M57_022.fits' has an error so it was removed
 
