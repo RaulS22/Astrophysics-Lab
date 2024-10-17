@@ -18,11 +18,11 @@ Tomás Quinhones 100371
 """
 
 # Load the Master Bias
-bias_path = "BIAS/"
+bias_path = "M57/"
 master_bias = fits.getdata(bias_path + "master_bias.fits")
 
 # Load the Master Flat
-flat_path = "FLAT/"
+flat_path = "M57/"
 master_flat_black = fits.getdata(flat_path + "master_flat_black.fits")
 master_flat_red = fits.getdata(flat_path + "master_flat_red.fits")
 master_flat_green = fits.getdata(flat_path + "master_flat_green.fits")
@@ -49,7 +49,7 @@ def calibrate_images(dir, file_list):
     return denoised_images, masks
 
 # Main directory path
-dir = "23092024/M57/"
+dir = "M57/"
 
 # Define raw file lists
 raw_files = {
@@ -115,7 +115,6 @@ raw_files = {
 
     "red": ['m57_2024-09-23_20-36-16_Red_0380.fits',
         'm57_2024-09-23_20-36-49_Red_0381.fits',
-        'm57_2024-09-23_20-37-21_Red_0382.fits',
         'm57_2024-09-23_20-37-54_Red_0383.fits',
         'm57_2024-09-23_20-38-27_Red_0384.fits',
         'm57_2024-09-23_20-38-59_Red_0385.fits',
@@ -124,6 +123,8 @@ raw_files = {
         'm57_2024-09-23_20-40-38_Red_0388.fits',
         'm57_2024-09-23_20-41-10_Red_0389.fits']
 }
+
+
 
 
 # Process each color
@@ -144,7 +145,7 @@ def save_calibrated_images(calibrated_images, color, output_dir):
         print(f"Saved {new_filename} in {output_dir}")
 
 # Define output directory
-output_dir = "Calibrated_Images/"
+output_dir = "Science_Calibrated_Images_M57/"
 
 # Process and save for each color
 for color, files in raw_files.items():
@@ -153,12 +154,12 @@ for color, files in raw_files.items():
         save_calibrated_images(calibrated_images, color, output_dir)
 
 
-#Warning: The file 'red_M57_002.fits' has an error, so it need to be removed
-
+# Warning: The file 'm57_2024-09-23_20-37-21_Red_0382.fits' has an error, so it was removed
+# Warning: The old file 'red_M57_002.fits' has an error, was removed 
 
 # Tests
 
-'''
+
 # Black
 color = "black"
 if calibrated_results[color][0]:  # Check if there's at least one calibrated image
@@ -194,7 +195,7 @@ if calibrated_results[color][0]:  # Check if there's at least one calibrated ima
     plt.title(f'Denoised Image - {color.capitalize()}')
     plt.colorbar()
     plt.show()
-'''
+
 
 
 
