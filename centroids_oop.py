@@ -6,74 +6,56 @@ import os
 
 class Centroid:
     def __init__(self, dir, calibrated_files, positions):
-        '''
-        This class will be used to calculate centroids for multiple images.
-
-        Parameters:
-        dir: str
-            The path to the files
-        
-        calibrated_files: list
-            List of FITS file names
-        
-        positions: list of ndarray
-            List of rough positions for the centroids of each image
-        '''
         self.dir = dir
         self.calibrated_files = calibrated_files
         self.positions = positions
 
-        # Validate inputs
         if not isinstance(dir, str):
             raise ValueError("Path must be a string")
         
-        if not isinstance(calibrated_files, list):
-            raise ValueError("Calibrated files must be a list")
+        if not isinstance(calibrated_files, dict):
+            raise ValueError("Calibrated files must be a dictionary")
         
-        if not isinstance(positions, list):
-            raise ValueError("Positions must be a list")
-        
+        if not isinstance(positions, dict):
+            raise ValueError("Positions must be a dictionary")
+
     def get_centroids(self, plot=False):
-        '''
-        Calculate the centroids for all images and optionally plot the results.
-
-        Parameters:
-        plot: bool
-            If True, plots the subdata and centroids for each image.
+        centroids = {}
         
-        Returns:
-        centroids: list
-            List of centroids for all images.
-        '''
-        centroids = []
+        for filter_name, files in self.calibrated_files.items():
+            filter_centroids = []
 
-        for file, pos in zip(self.calibrated_files, self.positions):
-            data = fits.getdata(os.path.join(self.dir, file))
-            pos = np.array(pos)
+            # Get the reference file's position and data
+            ref_file = files[0]
+            ref_pos = self.positions[filter_name][0]
 
-            # Extract a subimage around the rough centroid position
-            subdata = data[pos[1]-30:pos[1]+30, pos[0]-30:pos[0]+30]
+            # Load the reference image
+            ref_data = fits.getdata(os.path.join(self.dir, ref_file))
+            ref_subdata = ref_data[ref_pos[1]-40:ref_pos[1]+40, ref_pos[0]-40:ref_pos[0]+40]
+        
+            # Calculate centroid for the reference image
+            ref_centroid = centroid_2dg(ref_subdata) + ref_pos - np.array([40, 40])
+            filter_centroids.append(ref_centroid)
 
-            # Calculate centroids
-            centroid = centroid_2dg(subdata) + pos - np.array([30, 30])
-            centroids.append(centroid)
+            for file, pos in zip(files, self.positions[filter_name]):
+                data = fits.getdata(os.path.join(self.dir, file))
+                pos = np.array(pos)
 
-            if plot:
-                self.plot_subdata(subdata, centroid)
+                subdata = data[pos[1]-30:pos[1]+30, pos[0]-30:pos[0]+30]
+                centroid = centroid_2dg(subdata) + pos - np.array([30, 30])
+                
+                # Calculate shift from reference centroid
+                shifted_centroid = centroid - ref_centroid
+                filter_centroids.append(shifted_centroid)
+
+                if plot:
+                    self.plot_subdata(subdata, centroid)
+
+            centroids[filter_name] = filter_centroids
 
         return centroids
 
     def plot_subdata(self, subdata, centroid):
-        '''
-        Helper function to plot the subdata and its centroid.
-
-        Parameters:
-        subdata: ndarray
-            The extracted subimage data.
-        
-        centroid: ndarray
-            The calculated centroid position.
-        '''
         plt.imshow(subdata, origin='lower', cmap='gray')
         plt.plot(centroid[0]-30, centroid[1]-30, 'r+', markersize=10, label='Centroid')
         plt.title('Subdata with Centroid')
@@ -81,15 +63,9 @@ class Centroid:
         plt.legend()
         plt.show()
 
+
+"""
 if __name__ == '__main__':
     dir_path = "Science_Calibrated_Images_M57/"
-    positions = [
     
-    ]
-
-    calibrated_files = [
-    
-    ]
-
-    centroid_calculator = Centroid(dir_path, calibrated_files, positions)
-    centroids = centroid_calculator.get_centroids(plot=True)
+"""
