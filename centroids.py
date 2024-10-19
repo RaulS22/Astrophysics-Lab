@@ -16,14 +16,14 @@ dir = "Science_Calibrated_Images_M57/"
 positions = {
     'black': [[90, 453]] * 12,  # Same position for all black images
     'red': [[165, 263]] * 9,    # Same position for all red images
-    'green': [[127, 353]] * 12 + [[140, 320]] * 12,  # Different positions for first 12 and next 12 images
+    'green': [[127, 353]] * 12 + [[140, 320]] * 9,  # Different positions for first 12 and next 12 images
     'blue': [[101, 431]] * 11 + [[112, 407]] * 10   # Different positions for first 11 and next 10 images
 }
 
 calibrated_files = {
     'black': [f'black_M57_{i:03d}.fits' for i in range(1, 13)],
     'red': [f'red_M57_{i:03d}.fits' for i in range(1, 10)],
-    'green': [f'green_M57_{i:03d}.fits' for i in range(1, 23)],
+    'green': [f'green_M57_{i:03d}.fits' for i in range(1, 22)],
     'blue': [f'blue_M57_{i:03d}.fits' for i in range(1, 22)]
 }
 
