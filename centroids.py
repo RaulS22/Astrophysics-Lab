@@ -31,7 +31,7 @@ calibrated_files = {
 centroid_calculator = Centroid(dir, calibrated_files, positions)
 
 # Get centroids for all filters
-centers_2dg = centroid_calculator.get_centroids(plot=False)
+centers_2dg = centroid_calculator.get_centroids(plot=False) #change to True to plot the centroids
 
 # Shift and stack images for each filter
 for filter_name in calibrated_files.keys():
